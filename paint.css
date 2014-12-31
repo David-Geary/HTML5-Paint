@@ -1,0 +1,252 @@
+/*
+ * Copyright (C) 2012 David Geary. This code is from the book
+ * Core HTML5 Canvas, published by Prentice-Hall in 2012.
+ *
+ * License:
+ *
+ * Permission is hereby granted, free of charge, to any person 
+ * obtaining a copy of this software and associated documentation files
+ * (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge,
+ * publish, distribute, sublicense, and/or sell copies of the Software,
+ * and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *
+ * The Software may not be used to create training material of any sort,
+ * including courses, books, instructional videos, presentations, etc.
+ * without the express written consent of David Geary.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
+*/
+
+body {
+   background: rgb(175,175,175);
+   font: Arial;
+}
+
+button {
+   font: 12px Arial;
+}
+
+.paint-select {
+   margin-right: 15px;
+   font: 12px Arial;
+}
+
+#paint-drawing-canvas {
+   position: absolute;
+   margin-left: -2px;
+   margin-top: 15px;
+   display: inline;
+   -webkit-box-shadow: 2px 2px 18px rgba(0,0,0,0.5);
+   -moz-box-shadow: 2px 2px 18px rgba(0,0,0,0.5);
+   -o-box-shadow: 2px 2px 18px rgba(0,0,0,0.5);
+   box-shadow: 2px 2px 18px rgba(0,0,0,0.5);
+   cursor: crosshair;
+}
+
+#paint-curve-instructions p {
+   margin-bottom: 30px;
+}
+
+#paint-curve-instructions {
+   position: absolute;
+   top: 150px;
+   left: 215px;
+   padding: 10px;
+   background: -webkit-gradient(radial, 325 50%, 30, 325 50%, 640, from(rgba(255,255,255,0.6)), to(rgba(0,0,235,0.6)));
+   background: -webkit-gradient(radial, 325 50%, 10, 325 50%, 640, from(rgba(255,255,0,0.6)), to(rgba(172,192,135,0.6)));
+   background-image: -moz-radial-gradient(center, circle farthest-side, rgba(255, 255, 0, 0.6), rgba(172, 192, 135, 0.6));
+   background-image: -o-radial-gradient(center, circle farthest-side, rgba(255, 255, 0, 0.6), rgba(172, 192, 135, 0.6));
+   background-image: radial-gradient(center, circle farthest-side, rgba(205, 205, 0, 0.6), rgba(172, 192, 135, 0.6));
+
+   width: 450px;
+   height: 170px;
+
+   color: navy;
+   text-shadow: 1px 1px rgb(255,255,255);
+
+   -webkit-box-shadow: 2px 2px 18px rgba(0,0,0,0.5);
+   -moz-box-shadow: 2px 2px 18px rgba(0,0,0,0.5);
+   -o-box-shadow: 2px 2px 18px rgba(0,0,0,0.5);
+   box-shadow: 2px 2px 18px rgba(0,0,0,0.5);
+
+   border-radius: 5px;
+   -webkit-border-radius: 5px;
+   -o-border-radius: 5px;
+   -moz-border-radius: 5px;
+
+   font: 15px Arial;
+   display: none;
+}
+
+#paint-controls {
+   margin-left: 72px;
+   margin-top: 15px;
+   font: 14px Arial;
+   color: rgb(0,0,250);
+   color: yellow;
+   text-shadow: 2px 2px 2px rgba(0,0,0,0.8);
+
+   -webkit-transition: opacity 2s;
+   -moz-transition: opacity 2s;
+   -o-transition: opacity 2s;
+   transition: opacity 2s;
+}
+
+#paint-icon-canvas {
+   margin-left: -5px;
+   margin-top: 10px;
+   display: inline;
+   -webkit-transition: opacity 2s;
+   -moz-transition: opacity 2s;
+   -o-transition: opacity 2s;
+   transition: opacity 2s;
+   cursor: pointer;
+}
+
+#paint-erase-all {
+   position: absolute;
+   margin-left: 640px;
+   margin-top: -21px;
+   background: rgb(175,175,175);
+   color: yellow;
+   font-size: 0.9em;
+   text-shadow: 2px 2px 2px rgba(0,0,0,0.8);
+   border-radius: 10px;
+   -webkit-border-radius: 10px;
+   -o-border-radius: 10px;
+   -moz-border-radius: 10px;
+   font: 12px Arial;
+   -webkit-transition: opacity 2s;
+   -moz-transition: opacity 2s;
+   -o-transition: opacity 2s;
+   cursor: pointer;
+}
+
+#paint-information-div h1 {
+   margin-bottom: 20px;
+   font: 24px arial;
+   color: navy;
+   color: yellow;
+   text-shadow: 1px 1px 1px rgba(255,255,235,0.8);
+   text-shadow: 2px 2px 2px rgba(0,0,80,0.7);
+}
+
+#paint-information-div p {
+   color: black;
+   color: yellow;
+   text-shadow: 1px 1px 1px rgba(255,255,255,1.0);
+   text-shadow: 1px 1px 1px rgba(0,0,0,1.0);
+   text-shadow: 1px 1px 1px navy;
+   font: 16px arial;
+}
+
+#paint-information-div {
+   position: absolute;
+   margin-left: 100px;
+   top: 70px;
+   padding-left: 20px;
+   padding-right: 20px;
+   padding-bottom: 20px;
+   background: rgba(85,105,235,0.6);
+
+   border: 1px solid rgb(52,72,35);
+   z-index: 3;
+
+   -webkit-box-shadow: 4px 4px 8px rgba(60, 60, 70, 0.7);
+   -moz-box-shadow: 4px 4px 8px rgba(60, 60, 70, 0.7);
+   box-shadow: 4px 4px 8px rgba(60, 60, 70, 0.7);
+
+   width: 650px;
+   height: 400px;
+   display: none;
+}
+
+#paint-information-close-icon:hover {
+   font-size: 0.85em;
+}
+
+#paint-information-close-icon {
+   margin-left: 635px;
+   margin-top: -330px;
+   cursor: pointer;
+   font-size: 0.8em;
+   color: yellow;
+   text-shadow: 1px 1px 1px rgb(255,255,255);
+   text-shadow: 1px 1px 1px rgb(0,0,0);
+}
+
+#paint-keyboard {
+   margin-left: 72px;
+   margin-top: 5px;
+   height: 0px;
+   width: 758px;
+}
+
+#paint-snapshot-instructions {
+   position: absolute;
+   margin-left: 280px;
+   margin-top: 180px;
+   width: 250px;
+   padding: 20px;
+   border: thin solid blue;
+   background: -webkit-gradient(radial, 325 50%, 30, 325 50%, 640, from(rgba(255,255,255,0.8)), to(rgba(0,0,235,0.8)));
+   background: -webkit-gradient(radial, 325 50%, 10, 325 50%, 640, from(rgba(255,255,0,0.8)), to(rgba(172,192,135,0.8)));
+   background-image: -moz-radial-gradient(center, circle farthest-side, rgba(255, 255, 0, 0.8), rgba(172, 192, 135, 0.8));
+   background-image: -o-radial-gradient(center, circle farthest-side, rgba(255, 255, 0, 0.8), rgba(172, 192, 135, 0.8));
+   background-image: radial-gradient(center, circle farthest-side, rgba(205, 205, 0, 0.8), rgba(172, 192, 135, 0.8));
+   opacity: 0;
+   -webkit-transition: opacity 2s;
+   -moz-transition: opacity 2s;
+   -o-transition: opacity 2s;
+   transition: opacity 2s;
+   z-index: 3;
+   -webkit-box-shadow: 2px 2px 18px rgba(0,0,0,0.5);
+   -moz-box-shadow: 2px 2px 18px rgba(0,0,0,0.5);
+   -o-box-shadow: 2px 2px 18px rgba(0,0,0,0.5);
+   box-shadow: 2px 2px 18px rgba(0,0,0,0.5);
+   color: navy;
+   text-shadow: 2px 2px 2px rgb(255,255,255);
+   font: 14px Arial;
+   display: none;
+}
+
+#paint-snapshot-image-element {
+   position: absolute;
+   width: 760px;
+   height: 550px;
+   margin-left: 72px;
+   margin-top: 15px;
+   display: inline;
+   cursor: crosshair;
+   z-index: 2;
+   cursor: pointer;
+   display: none;
+}
+
+#paint-snapshot-button {
+   position: absolute;
+   margin-left: 710px;
+   margin-top: -21px;
+   background: rgb(175,175,175);
+   color: yellow;
+   font-size: 0.9em;
+   text-shadow: 2px 2px 2px rgba(0,0,0,0.8);
+   border-radius: 10px;
+   -webkit-border-radius: 10px;
+   -o-border-radius: 10px;
+   -moz-border-radius: 10px;
+   font: 12px Arial;
+   cursor: pointer;
+}

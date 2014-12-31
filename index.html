@@ -1,0 +1,120 @@
+<!--
+- Copyright (C) 2012 David Geary. This code is from the book
+- Core HTML5 Canvas, published by Prentice-Hall in 2012.
+-
+- License:
+-
+- Permission is hereby granted, free of charge, to any person 
+- obtaining a copy of this software and associated documentation files
+- (the "Software"), to deal in the Software without restriction,
+- including without limitation the rights to use, copy, modify, merge,
+- publish, distribute, sublicense, and/or sell copies of the Software,
+- and to permit persons to whom the Software is furnished to do so,
+- subject to the following conditions:
+-
+- The above copyright notice and this permission notice shall be
+- included in all copies or substantial portions of the Software.
+-
+- The Software may not be used to create training material of any sort,
+- including courses, books, instructional videos, presentations, etc.
+- without the express written consent of David Geary.
+-
+- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+- EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+- OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+- NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+- HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+- WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+- FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+- OTHER DEALINGS IN THE SOFTWARE.
+-->
+
+<!doctype html>
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, maximum-scale=1.0, user-scalable=no"/>
+   <meta name="apple-mobile-web-app-capable" content="yes"/>
+ 
+   <title>HTML5 Canvas Paint</title>
+   <meta name="description" content="Paint application from Core HTML5 Canvas">
+ 
+   <link rel="stylesheet" href="paint.css">
+</head>
+
+<body>
+   <div id='paint-snapshot-instructions'>
+     The canvas underneath this notice is now an image. Right-click to save it to disk. When you click the Back to Paint button, the image will revert to the canvas.
+   </div>
+
+   <div id="paint-controls">
+        Stroke: <select id='paint-strokeStyleSelect' class='paint-select'>
+                     <option value='red'>red</option>
+                     <option value='green'>green</option>
+                     <option value='blue'>blue</option>
+                     <option value='orange'>orange</option>
+                     <option value='cornflowerblue' selected>cornflowerblue</option>
+                     <option value='goldenrod'>goldenrod</option>
+                     <option value='white'>white</option>
+                     <option value='purple'>purple</option>
+                  </select>
+
+         Fill: <select id='paint-fillStyleSelect' class='paint-select'>
+                   <option value='red'>red</option>
+                   <option value='rgba(255,0,0,0.5)'>semi-transparent red</option>
+                   <option value='green'>green</option>
+                   <option value='rgba(0,255,0,0.5)'>semi-transparent green</option>
+                   <option value='blue'>blue</option>
+                   <option value='rgba(0,0,255,0.5)'>semi-transparent blue</option>
+                   <option value='orange'>orange</option>
+                   <option value='rgba(255,165,0,0.5)'>semi-transparent orange</option>
+                   <option value='cornflowerblue'>cornflowerblue</option>
+                   <option value='rgba(100,140,230,0.5)'>semi-transparent cornflowerblue</option>
+                   <option value='goldenrod'>goldenrod</option>
+                   <option value='rgba(218,165,32,0.5)' selected>semi-transparent goldenrod</option>
+                   <option value='white'>white</option>
+                   <option value='rgba(255,255,255,0.5)'>semi-transparent white</option>
+                   <option value='purple'>purple</option>
+                   <option value='rgba(255,0,255,0.5)'>semi-transparent purple</option>
+                </select>
+
+         Line width: <select id='paint-lineWidthSelect' class='paint-select'>
+                   <option value='1.0'>1.0</option>
+                   <option value='2.0'>2.0</option>
+                   <option value='3.0'>3.0</option>
+                   <option value='4.0'>4.0</option>
+                   <option value='5.0'>5.0</option>
+                   <option value='6.0'>6.0</option>
+                </select>
+   </div>
+
+   <button id='paint-erase-all' type='button'>Erase all</button>
+   <button id='paint-snapshot-button' type='button'>Take a snapshot</button>
+   
+   <img id='paint-snapshot-image-element'/>
+
+   <canvas id="paint-icon-canvas" width="75" height="550">
+     Canvas not supported
+   </canvas>
+  
+   <canvas id="paint-drawing-canvas" class='featured-example-canvas' width="760" height="550">
+     Canvas not supported
+   </canvas>
+
+   <div id='paint-keyboard'></div>
+
+   <div id='paint-curve-instructions' class='floatingControls'>
+      <p>
+        The yellow circles represent control-points for a cubic bezier curve and the red circles represent the curve's end-points. You can drag any of them to change the shape of the curve. When you are done adjusting the curve's shape, click anywhere outside of the control- and end-points to finalize the curve.
+      </p>
+ 
+      <button id='paint-curve-instructions-okay-button' type='button'>Okay</button>
+      <button id='paint-curve-instructions-no-more-button' type='button'>Do not show this again</button>
+   </div>
+
+  <script src="keyboard.js"></script>
+  <script src="paint.js"></script>
+  <script src="example.js"></script>
+</body>
+</html>
+
+
